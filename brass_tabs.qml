@@ -88,7 +88,7 @@ MuseScore {
 
       function checkbox_visibility()
       {
-            trompetcheck_visible = (trompet.checked || f_tuba.checked) ? true : false; 
+            trompetcheck_visible = (trompet.checked || f_tuba.checked || tenorhorn.checked) ? true : false; 
       }
 
       function handleNote(note, staffIdx)

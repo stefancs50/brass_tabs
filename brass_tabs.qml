@@ -41,7 +41,7 @@ MuseScore {
                   RadioButton {
                         id: trompet
                         checked: true
-                        text: "Trompet"
+                        text: "Trumpet"
                         onClicked: checkbox_visibility()
                   }
                   RadioButton {

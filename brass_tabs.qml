@@ -59,6 +59,11 @@ MuseScore {
                         text: "Tuba"
                         onClicked: checkbox_visibility()
                   }
+                  RadioButton {
+                        id: debug
+                        text: "tpc and pitch and octave"
+                        onClicked: checkbox_visibility()
+                  }
             }
 
             CheckBox 
@@ -115,6 +120,9 @@ MuseScore {
             }
             if(f_tuba.checked){
                   return getF_TubaValve(pct, o);
+            }
+            if(debug.checked){
+                  return pct+'\n'+pitch+'\n'+o;
             }
       }
 
@@ -249,6 +257,43 @@ MuseScore {
             curScore.endCmd();
 	      quit();
       }
+
+      class Valve{
+
+      }
+
+      notes [
+            //c
+            14,
+            //cis //des
+            21,
+            9; 
+                  //d
+                  case 16: return '12\n(3)'; break;
+                  //dis //es
+                  case 11:
+                  case 23: return '1'; break;
+                  //e
+                  case 18: return '2'; break;
+                  //f
+                  case 13: return null_as_no_valve ? '0' : ''; break;
+                  //ges, fis,
+		      case 8:
+                  case 20: return o == 3 ? '12': '24'; break; 
+                  //g
+                  case 15: return '4'; break;
+                  //gis//as
+                  case 22:
+                  case 10: return '23'; break;
+                  //a
+                  case 17: return '12';break; 
+                  //b//ais
+                  case 12:
+                  case 24: return '1';break;
+                  //h
+                  case 19: return '2';break;  
+                  default: return 'err\n' + pct + 'uk'+pitch;
+      ]
 
 
       onRun:{

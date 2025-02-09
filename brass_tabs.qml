@@ -56,7 +56,7 @@ MuseScore {
                   }
                   RadioButton {
                         id: f_tuba
-                        text: "Tuba"
+                        text: "Tuba(F)"
                         onClicked: checkbox_visibility()
                   }
                   RadioButton {

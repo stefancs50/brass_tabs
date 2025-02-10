@@ -20,7 +20,7 @@ MuseScore {
 
       property bool null_as_no_valve: true       
       property bool trompetcheck_visible: true
-      property int tubavalves: 3
+      property int valves: 3
      
       GridLayout 
       {
@@ -67,11 +67,11 @@ MuseScore {
                   RadioButton {
                         checked: true
                         text: "3 Valves"
-                        onClicked: tubavalves = 3
+                        onClicked: valves = 3
                   }
                   RadioButton {
                         text: "4 Valves"
-                        onClicked: tubavalves = 4
+                        onClicked: valves = 4
                   }
             }
 
@@ -142,12 +142,12 @@ MuseScore {
             }
       }
 
-      function replaceValves(valve) {
-            if(tubavalves == 3){
-                  return valve;
+      function replaceValves(string_valve) {
+            if(valves == 3){
+                  return string_valve;
             }
-            if(tubavalves == 4){
-                  return (valve == "123") ? "24": (valve == "13") ? "4" : valve;
+            if(valves == 4){
+                  return (string_valve == "123") ? "24": (string_valve == "13") ? "4" : string_valve;
             }
       }
 

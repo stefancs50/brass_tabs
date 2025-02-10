@@ -111,10 +111,9 @@ MuseScore {
                   return trumpet_valvemap[pitch] || 'p'+pitch;
             }
 		if(trombone.checked){
-                  var positionMap = { 39: "7",40: "6",41: "5",42: "4",43: "3",44: "2",45: "1",46: "4",47: "3",48: "2",49: "1",
-                                    50: "6",51: "5",52: "4",53: "3",54: "2",55: "1",56: "4",57: "3",58: "2",59: "1",60: "5",
-                                    61: "4",62: "3",63: "2",64: "1",65: "4",66: "3",67: "2",68: "1",69: "3",70: "2",71: "1",
-                                    72: "3",73: "2",74: "1" };
+                  var positionMap = { 40: "7",41: "6",42: "5",43: "4",44: "3",45: "2",46: "1",47: "7\nV2",48: "6\nV1",49: "5",50: "4",
+                              51: "3",52: "2",53: "1",54: "5",55: "4",56: "3",57: "2",58: "1",59: "4",60: "3",61: "2",
+                              62: "1\n(4)", 63: "3",64: "2",65: "1",66: "3+",67: "2+\n(4)",68: "(1)\n3",69: "1",70: "3",71: "2" };
                   return positionMap[pitch] || 'p'+pitch;                
             }
             if(f_tuba.checked){
@@ -125,68 +124,6 @@ MuseScore {
                   return pct+'\n'+pitch+'\n'+o;
             }
       }
-
-      // function getTromboneValve(pct, pitch)
-      // {
-      //       switch (pct) {          
-      //             case 18: return (pitch === 40) ? '7\n(2V)': '2'; break; //e
-      //             case 13: return (pitch === 41) ? '6\n(1V)': '1'; break;// f  
-	// 	      case 7: return   (pitch === 59) ? '4': (pitch === 47) ? '6\n(1V)' : pct+'.'+pitch         
-      //             case 8://ges
-      //             case 20: return (pitch === 42|| pitch === 54) ? '5': '3+'; break;//fis
-      //             case 15: return (pitch === 43 || pitch === 55) ? '4': '2+'; break;//G
-      //             case 10://as
-      //             case 22: return '3';break;//gis
-      //             case 17: return '2';break; //a
-      //             case 12: //b
-      //             case 24: return '1';break; //ais  
-      //             case 19: return (pitch === 47) ? '7\n(2V)' :(pitch === 59 ? '4': (pitch === 35) ?'\n(-7V)' : '2') ;break;  //h 
-      //             case 14: return (pitch === 48) ? '6\n(1V)' :(pitch === 60 ? '3': (pitch === 36) ?'\n(-6V)' : '1'); break;//C
-      //             case 9:
-      //             case 21: return  (pitch === 49) ? '5': (pitch === 37)  ? '\n(-5V)' : '2'; break;//cis
-      //             case 16: return  (pitch === 50) ? '4': (pitch === 38) ? '\n(-4V)' : '1'; break;//d
-      //             case 11://es
-      //             case 23: return (pitch === 39)  ? '\n(-3V)':  '3'; break;//dis                
-      //             default: return pct+'.'+pitch;
-      //       }
-      // }
-
-      // function getTrumpetValve(pct, o)
-      // {
-
-      //       switch (pct) {
-      //             //c
-	// 	      case 14: return null_as_no_valve ? '0' : ''; break;
-      //             //cis //des
-      //             case 21:
-      //             case 9: return o == 4 ? '123': '12'; break; 
-      //             //d
-      //             case 16: return  o == 4 ? '13': (o == 5) ? '1' : '1(0)'; break;
-      //             //dis //es
-      //             case 11:
-      //             case 23: return o == 4 ? '23' : '2'; break;
-      //             //e
-      //             case 18: return o == 4 ? '12': null_as_no_valve ? '0' : ''; break;
-      //             //f
-      //             case 13: return '1'; break;
-      //             //ges, fis,
-	// 	      case 8:
-      //             case 20: return o == 3 ? '123': '2'; break; 
-      //             //g
-      //             case 15: return o == 3 ? '13': null_as_no_valve ? '0' : ''; break;
-      //             //gis//as
-      //             case 22:
-      //             case 10: return '23'; break;
-      //             //a
-      //             case 17: return '12';break; 
-      //             //b//ais
-      //             case 12:
-      //             case 24: return '1';break;
-      //             //h
-      //             case 19: return '2';break;  
-      //             default: return 'err\n' + pct + 'uk'+pitch;
-      //       }
-      // }
 
       function getF_TubaValve(pct, o)
       {

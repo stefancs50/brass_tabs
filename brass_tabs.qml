@@ -113,7 +113,8 @@ MuseScore {
                   return getTrumpetValve(pct, o);
             }
             if(tenorhorn.checked){
-                  return getTrumpetValve(pct, o + 1);
+                  var transposedPitch = pitch + 2;
+                  return trumpet_valvemap[transposedPitch] || 'p'+pitch;
             }
 		if(trombone.checked){
                   return getTromboneValve(pct, pitch);
@@ -223,6 +224,13 @@ MuseScore {
             }
       }
 
+      function pitchToNoteName(pitch) {
+            var noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+            var note = noteNames[pitch % 12];  // Notenname berechnen
+            var octave = Math.floor(pitch / 12) - 1;  // Oktave berechnen
+            return note + octave;
+      }
+
       //Trompete C1 = Octave 4
 	function getOctave(pitch){
 		var transposedPitch = pitch + 2;
@@ -257,6 +265,15 @@ MuseScore {
             curScore.endCmd();
 	      quit();
       }
+
+      var trumpet_valvemap = {
+            54: "123", 55: "13", 56: "23", 57: "12", 58: "1", 59: "2", 60: "0",
+            61: "23", 62: "12", 63: "1", 64: "2", 65: "0", 66: "23", 67: "12",
+            68: "1", 69: "2", 70: "0", 71: "2", 72: "0", 73: "23", 74: "12",
+            75: "1", 76: "2", 77: "0", 78: "23", 79: "12", 80: "1", 81: "2",
+            82: "0", 83: "2", 84: "0"
+      };
+
 
       // notes = {
       //       tpc = [14, 21, 9, 16, 11, 23, 18, 13, 8, 20, 15, 22, 10, 17, 12, 24, 19]

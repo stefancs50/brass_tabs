@@ -21,6 +21,7 @@ MuseScore {
       property bool null_as_no_valve: true       
       property bool trompetcheck_visible: true
 
+     
       GridLayout 
       {
             id: walkingBassMainLayout
@@ -42,11 +43,6 @@ MuseScore {
                         id: trompet
                         checked: true
                         text: "Trumpet"
-                        onClicked: checkbox_visibility()
-                  }
-                  RadioButton {
-                        id: tenorhorn
-                        text: "Tenorhorn"
                         onClicked: checkbox_visibility()
                   }
                   RadioButton {
@@ -88,7 +84,7 @@ MuseScore {
 
       function checkbox_visibility()
       {
-            trompetcheck_visible = (trompet.checked || f_tuba.checked || tenorhorn.checked) ? true : false; 
+            trompetcheck_visible = (trompet.checked || f_tuba.checked ) ? true : false; 
       }
 
       function handleNote(note, staffIdx)
@@ -110,11 +106,10 @@ MuseScore {
         	var o = getOctave(pitch);   
             console.log(trombone)
             if(trompet.checked){
-                  return getTrumpetValve(pct, o);
-            }
-            if(tenorhorn.checked){
-                  var transposedPitch = pitch + 2;
-                  return trumpet_valvemap[transposedPitch] || 'p'+pitch;
+                  var trumpet_valvemap = { 52: "123", 53: "13", 54: "23", 55: "12", 56: "1", 57: "2", 58: "0", 59: "23", 60: "13", 61: "12", 62: "1", 63: "2",
+                                          64: "0", 65: "23", 66: "12", 67: "1", 68: "2", 69: "0", 70: "1", 71: "12", 72: "1", 73: "2", 74: "0", 75: "1", 76: "2",
+                                          77: "0", 78: "23", 79: "12", 80: "1", 81: "2", 82: "0", 83: "23", 84: "1", 85: "2"  };
+                  return trumpet_valvemap[pitch] || 'p'+pitch;
             }
 		if(trombone.checked){
                   return getTromboneValve(pct, pitch);
@@ -152,41 +147,42 @@ MuseScore {
             }
       }
 
-      function getTrumpetValve(pct, o)
-      {
-            switch (pct) {
-                  //c
-		      case 14: return null_as_no_valve ? '0' : ''; break;
-                  //cis //des
-                  case 21:
-                  case 9: return o == 4 ? '123': '12'; break; 
-                  //d
-                  case 16: return  o == 4 ? '13': (o == 5) ? '1' : '1(0)'; break;
-                  //dis //es
-                  case 11:
-                  case 23: return o == 4 ? '23' : '2'; break;
-                  //e
-                  case 18: return o == 4 ? '12': null_as_no_valve ? '0' : ''; break;
-                  //f
-                  case 13: return '1'; break;
-                  //ges, fis,
-		      case 8:
-                  case 20: return o == 3 ? '123': '2'; break; 
-                  //g
-                  case 15: return o == 3 ? '13': null_as_no_valve ? '0' : ''; break;
-                  //gis//as
-                  case 22:
-                  case 10: return '23'; break;
-                  //a
-                  case 17: return '12';break; 
-                  //b//ais
-                  case 12:
-                  case 24: return '1';break;
-                  //h
-                  case 19: return '2';break;  
-                  default: return 'err\n' + pct + 'uk'+pitch;
-            }
-      }
+      // function getTrumpetValve(pct, o)
+      // {
+
+      //       switch (pct) {
+      //             //c
+	// 	      case 14: return null_as_no_valve ? '0' : ''; break;
+      //             //cis //des
+      //             case 21:
+      //             case 9: return o == 4 ? '123': '12'; break; 
+      //             //d
+      //             case 16: return  o == 4 ? '13': (o == 5) ? '1' : '1(0)'; break;
+      //             //dis //es
+      //             case 11:
+      //             case 23: return o == 4 ? '23' : '2'; break;
+      //             //e
+      //             case 18: return o == 4 ? '12': null_as_no_valve ? '0' : ''; break;
+      //             //f
+      //             case 13: return '1'; break;
+      //             //ges, fis,
+	// 	      case 8:
+      //             case 20: return o == 3 ? '123': '2'; break; 
+      //             //g
+      //             case 15: return o == 3 ? '13': null_as_no_valve ? '0' : ''; break;
+      //             //gis//as
+      //             case 22:
+      //             case 10: return '23'; break;
+      //             //a
+      //             case 17: return '12';break; 
+      //             //b//ais
+      //             case 12:
+      //             case 24: return '1';break;
+      //             //h
+      //             case 19: return '2';break;  
+      //             default: return 'err\n' + pct + 'uk'+pitch;
+      //       }
+      // }
 
       function getF_TubaValve(pct, o)
       {
@@ -225,6 +221,7 @@ MuseScore {
       }
 
       function pitchToNoteName(pitch) {
+
             var noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
             var note = noteNames[pitch % 12];  // Notenname berechnen
             var octave = Math.floor(pitch / 12) - 1;  // Oktave berechnen
@@ -265,15 +262,6 @@ MuseScore {
             curScore.endCmd();
 	      quit();
       }
-
-      var trumpet_valvemap = {
-            54: "123", 55: "13", 56: "23", 57: "12", 58: "1", 59: "2", 60: "0",
-            61: "23", 62: "12", 63: "1", 64: "2", 65: "0", 66: "23", 67: "12",
-            68: "1", 69: "2", 70: "0", 71: "2", 72: "0", 73: "23", 74: "12",
-            75: "1", 76: "2", 77: "0", 78: "23", 79: "12", 80: "1", 81: "2",
-            82: "0", 83: "2", 84: "0"
-      };
-
 
       // notes = {
       //       tpc = [14, 21, 9, 16, 11, 23, 18, 13, 8, 20, 15, 22, 10, 17, 12, 24, 19]

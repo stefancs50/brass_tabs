@@ -143,6 +143,9 @@ MuseScore {
       }
 
       function replaceValves(string_valve) {
+            if(!null_as_no_valve && string_valve === "0"){
+                  return "";
+            }
             if(valves == 3){
                   return string_valve;
             }

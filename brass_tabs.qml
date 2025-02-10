@@ -103,8 +103,7 @@ MuseScore {
       }
 
       function getvalve(pct, pitch){
-        	var o = getOctave(pitch);   
-            console.log(trombone)
+            var o = getOctave(pitch);   
             if(trompet.checked){
                   var trumpet_valvemap = { 52: "123", 53: "13", 54: "23", 55: "12", 56: "1", 57: "2", 58: "0", 59: "123", 60: "13", 61: "23", 62: "12", 63: "1",
                                           64: "2", 65: "0", 66: "23", 67: "12", 68: "1", 69: "2", 70: "0", 71: "12", 72: "1", 73: "2", 74: "0", 75: "1", 76: "2",
@@ -112,9 +111,14 @@ MuseScore {
                   return trumpet_valvemap[pitch] || 'p'+pitch;
             }
 		if(trombone.checked){
-                  return getTromboneValve(pct, pitch);
+                   positionMap = { 39: "7",40: "6",41: "5",42: "4",43: "3",44: "2",45: "1",46: "4",47: "3",48: "2",49: "1",
+                                    50: "6",51: "5",52: "4",53: "3",54: "2",55: "1",56: "4",57: "3",58: "2",59: "1",60: "5",
+                                    61: "4",62: "3",63: "2",64: "1",65: "4",66: "3",67: "2",68: "1",69: "3",70: "2",71: "1",
+                                    72: "3",73: "2",74: "1" };
+                  return positionMap[pitch] || 'p'+pitch;                
             }
             if(f_tuba.checked){
+                  
                   return getF_TubaValve(pct, o);
             }
             if(debug.checked){
@@ -122,30 +126,30 @@ MuseScore {
             }
       }
 
-      function getTromboneValve(pct, pitch)
-      {
-            switch (pct) {          
-                  case 18: return (pitch === 40) ? '7\n(2V)': '2'; break; //e
-                  case 13: return (pitch === 41) ? '6\n(1V)': '1'; break;// f  
-		      case 7: return   (pitch === 59) ? '4': (pitch === 47) ? '6\n(1V)' : pct+'.'+pitch         
-                  case 8://ges
-                  case 20: return (pitch === 42|| pitch === 54) ? '5': '3+'; break;//fis
-                  case 15: return (pitch === 43 || pitch === 55) ? '4': '2+'; break;//G
-                  case 10://as
-                  case 22: return '3';break;//gis
-                  case 17: return '2';break; //a
-                  case 12: //b
-                  case 24: return '1';break; //ais  
-                  case 19: return (pitch === 47) ? '7\n(2V)' :(pitch === 59 ? '4': (pitch === 35) ?'\n(-7V)' : '2') ;break;  //h 
-                  case 14: return (pitch === 48) ? '6\n(1V)' :(pitch === 60 ? '3': (pitch === 36) ?'\n(-6V)' : '1'); break;//C
-                  case 9:
-                  case 21: return  (pitch === 49) ? '5': (pitch === 37)  ? '\n(-5V)' : '2'; break;//cis
-                  case 16: return  (pitch === 50) ? '4': (pitch === 38) ? '\n(-4V)' : '1'; break;//d
-                  case 11://es
-                  case 23: return (pitch === 39)  ? '\n(-3V)':  '3'; break;//dis                
-                  default: return pct+'.'+pitch;
-            }
-      }
+      // function getTromboneValve(pct, pitch)
+      // {
+      //       switch (pct) {          
+      //             case 18: return (pitch === 40) ? '7\n(2V)': '2'; break; //e
+      //             case 13: return (pitch === 41) ? '6\n(1V)': '1'; break;// f  
+	// 	      case 7: return   (pitch === 59) ? '4': (pitch === 47) ? '6\n(1V)' : pct+'.'+pitch         
+      //             case 8://ges
+      //             case 20: return (pitch === 42|| pitch === 54) ? '5': '3+'; break;//fis
+      //             case 15: return (pitch === 43 || pitch === 55) ? '4': '2+'; break;//G
+      //             case 10://as
+      //             case 22: return '3';break;//gis
+      //             case 17: return '2';break; //a
+      //             case 12: //b
+      //             case 24: return '1';break; //ais  
+      //             case 19: return (pitch === 47) ? '7\n(2V)' :(pitch === 59 ? '4': (pitch === 35) ?'\n(-7V)' : '2') ;break;  //h 
+      //             case 14: return (pitch === 48) ? '6\n(1V)' :(pitch === 60 ? '3': (pitch === 36) ?'\n(-6V)' : '1'); break;//C
+      //             case 9:
+      //             case 21: return  (pitch === 49) ? '5': (pitch === 37)  ? '\n(-5V)' : '2'; break;//cis
+      //             case 16: return  (pitch === 50) ? '4': (pitch === 38) ? '\n(-4V)' : '1'; break;//d
+      //             case 11://es
+      //             case 23: return (pitch === 39)  ? '\n(-3V)':  '3'; break;//dis                
+      //             default: return pct+'.'+pitch;
+      //       }
+      // }
 
       // function getTrumpetValve(pct, o)
       // {

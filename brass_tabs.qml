@@ -11,7 +11,6 @@ MuseScore {
       version: "4.4"
       description: "Puts the valvenumber under the note."
       title: "Brass Tabs Plugin"
-      categoryCode: "lyrics"
       thumbnailName: "brass.jpeg"
       pluginType: "dialog"
       requiresScore: true
@@ -25,7 +24,7 @@ MuseScore {
       GridLayout 
       {
             id: walkingBassMainLayout
-            columns: 1
+            columns: 2
             rowSpacing: 0
             anchors.fill: parent
             anchors.leftMargin: 5
@@ -33,12 +32,14 @@ MuseScore {
 
             Label 
             {
+                  Layout.columnSpan: 2
                   font.italic: true
                   text: "Only selected Notes will be affected.\nSelect Notes first than run the script."
                   bottomPadding: 10
             }
 
             ColumnLayout {
+                  Layout.columnSpan: 2
                   RadioButton {
                         id: trompet
                         checked: true
@@ -84,6 +85,14 @@ MuseScore {
                         null_as_no_valve = !null_as_no_valve; 
                   }
             }
+            
+            RoundButton 
+            {
+                  id: aboutButton
+                  text: "Help on Github"
+                  radius: 5
+                  onClicked: Qt.openUrlExternally("https://github.com/stefancs50/brass_tabs/blob/main/README.md")
+            }
 
             RoundButton 
             {
@@ -92,8 +101,8 @@ MuseScore {
                   radius: 5
                   onClicked: writeValves()
             }
-
       }
+
 
       function checkbox_visibility()
       {

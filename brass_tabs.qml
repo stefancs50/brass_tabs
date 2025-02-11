@@ -130,7 +130,7 @@ MuseScore {
                   var trumpet_valvemap = { 52: "123", 53: "13", 54: "23", 55: "12", 56: "1", 57: "2", 58: "0", 59: "123", 60: "13", 61: "23", 62: "12", 63: "1",
                                           64: "2", 65: "0", 66: "23", 67: "12", 68: "1", 69: "2", 70: "0", 71: "12", 72: "1", 73: "2", 74: "0", 75: "1", 76: "2",
                                           77: "0", 78: "23", 79: "12", 80: "1", 81: "2", 82: "0", 83: "12", 84: "1", 85: "2"  };
-                  return trumpet_valvemap[pitch] || 'p'+pitch;
+                  return replaceValves(trumpet_valvemap[pitch]) || 'p' + pitch;
             }
 		if(trombone.checked){
                   var positionMap = { 40: "7",41: "6",42: "5",43: "4",44: "3",45: "2",46: "1",47: "7\nV2",48: "6\nV1",49: "5",50: "4",
@@ -144,7 +144,7 @@ MuseScore {
                               50: "12",51: "1",52: "2",53: "0",54: "12",55: "1",56: "2",57: "0",
                               58: "1",59: "2",60: "0",61: "23",62: "12",63: "1",64: "2",65: "0" };
 
-                  return replaceValves(tuba_valveMap[pitch]) || 'p'+pitch; 
+                  return replaceValves(tuba_valveMap[pitch]) || 'p' + pitch; 
             }
             if(debug.checked){
                   return pct+'\n'+pitch+'\n'+o;

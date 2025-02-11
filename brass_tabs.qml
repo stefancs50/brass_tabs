@@ -97,11 +97,11 @@ MuseScore {
                   RadioButton {
                         checked: true
                         text: "American (B Bb)"
-                        onClicked: noete_names = 1
+                        onClicked: note_names = 1
                   }
                   RadioButton {
                         text: "Europe (H B)"
-                        onClicked: noete_names = 2
+                        onClicked: note_names = 2
                   }
             }
             
@@ -163,6 +163,9 @@ MuseScore {
                               58: "1",59: "2",60: "0",61: "23",62: "12",63: "1",64: "2",65: "0" };
 
                   return replaceValves(tuba_valveMap[pitch]) || 'p' + pitch; 
+            }
+            if(noete_names.checked){
+                  return pitchToNoteName(pct, pitch);
             }
             if(debug.checked){
                   var o = getOctave(pitch);  

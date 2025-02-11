@@ -20,6 +20,7 @@ MuseScore {
       property bool null_as_no_valve: true       
       property bool trompetcheck_visible: true
       property int valves: 3
+      property int note_names: 1
      
       GridLayout 
       {
@@ -57,6 +58,11 @@ MuseScore {
                         onClicked: checkbox_visibility()
                   }
                   RadioButton {
+                        id: noete_names
+                        text: "Note Names"
+                        onClicked: checkbox_visibility()
+                  }
+                  RadioButton {
                         id: debug
                         text: "tpc and pitch and octave"
                         onClicked: checkbox_visibility()
@@ -83,6 +89,19 @@ MuseScore {
                   visible: trompetcheck_visible
                   onClicked: { 
                         null_as_no_valve = !null_as_no_valve; 
+                  }
+            }
+
+            ColumnLayout {
+                  visible: noete_names.checked
+                  RadioButton {
+                        checked: true
+                        text: "American (B Bb)"
+                        onClicked: noete_names = 1
+                  }
+                  RadioButton {
+                        text: "Europe (H B)"
+                        onClicked: noete_names = 2
                   }
             }
             
@@ -124,8 +143,7 @@ MuseScore {
             cursor.add(lyr);
       }
 
-      function getvalve(pct, pitch){
-            var o = getOctave(pitch);   
+      function getvalve(pct, pitch){ 
             if(trompet.checked){
                   var trumpet_valvemap = { 52: "123", 53: "13", 54: "23", 55: "12", 56: "1", 57: "2", 58: "0", 59: "123", 60: "13", 61: "23", 62: "12", 63: "1",
                                           64: "2", 65: "0", 66: "23", 67: "12", 68: "1", 69: "2", 70: "0", 71: "12", 72: "1", 73: "2", 74: "0", 75: "1", 76: "2",
@@ -147,6 +165,7 @@ MuseScore {
                   return replaceValves(tuba_valveMap[pitch]) || 'p' + pitch; 
             }
             if(debug.checked){
+                  var o = getOctave(pitch);  
                   return pct+'\n'+pitch+'\n'+o;
             }
       }
@@ -163,12 +182,19 @@ MuseScore {
             }
       }
 
-      function pitchToNoteName(pitch) {
+      function pitchToNoteName(pct, pitch) {
+            var america = {
+                  -1: "F♭",  0: "C",   1: "G",   2: "D",   3: "A",   4: "E",   5: "B",
+                  6: "F#",   7: "C#",  8: "G#",  9: "D#", 10: "A#", 11: "E#",
+                  12: "B#", 13: "F",  14: "C♭", 15: "G♭", 16: "D♭", 17: "A♭", 18: "E♭", 19: "B♭"
+            };
+            var austria = {
+                  -1: "Fes",  0: "C",   1: "G",   2: "D",   3: "A",   4: "E",   5: "H",
+                  6: "Fis",   7: "Cis",  8: "Gis",  9: "Dis", 10: "Ais", 11: "Eis",
+                  12: "His",  13: "F",  14: "Ces", 15: "Ges", 16: "Des", 17: "As", 18: "Es", 19: "B"
+            };
 
-            var noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-            var note = noteNames[pitch % 12];  // Notenname berechnen
-            var octave = Math.floor(pitch / 12) - 1;  // Oktave berechnen
-            return note + octave;
+            return ((note_names==1) ? america[pct] : austria[pct] ) + "\n" + getOctave(pitch);
       }
 
       //Trompete C1 = Octave 4

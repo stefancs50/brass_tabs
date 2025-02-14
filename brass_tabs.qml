@@ -138,24 +138,26 @@ MuseScore {
             cursor.rewindToTick(tick);
             
             var lyr = newElement(Element.LYRICS);
-            lyr.text = getvalve(note.tpc, note.pitch);
+            lyr.text = getvalve(note, note.tpc, note.pitch);
             lyr.track = note.track ;
             cursor.add(lyr);
       }
 
-      function getvalve(pct, pitch){ 
+      function getvalve(note, pct, pitch){ 
             if(trompet.checked){
                   var trumpet_valvemap = { 52: "123", 53: "13", 54: "23", 55: "12", 56: "1", 57: "2", 58: "0", 59: "123", 60: "13", 61: "23", 62: "12", 63: "1",
                                           64: "2", 65: "0", 66: "23", 67: "12", 68: "1", 69: "2", 70: "0", 71: "12", 72: "1", 73: "2", 74: "0", 75: "1", 76: "2",
                                           77: "0", 78: "23", 79: "12", 80: "1", 81: "2", 82: "0", 83: "12", 84: "1", 85: "2"  };
                   return replaceValves(trumpet_valvemap[pitch]) || 'p' + pitch;
             }
+
 		if(trombone.checked){
                   var positionMap = { 40: "7",41: "6",42: "5",43: "4",44: "3",45: "2",46: "1",47: "7\nV2",48: "6\nV1",49: "5",50: "4",
                               51: "3",52: "2",53: "1",54: "5",55: "4",56: "3",57: "2",58: "1",59: "4",60: "3",61: "2",
                               62: "1\n(4)", 63: "3",64: "2",65: "1",66: "3+",67: "2+\n(4)",68: "(1)\n3",69: "1",70: "3",71: "2" };
                   return positionMap[pitch] || 'p'+pitch;                
             }
+
             if(f_tuba.checked){
                   var tuba_valveMap = { 35: "123",36: "13",37: "23",38: "12",39: "1",40: "2",41: "0",
                               42: "123",43: "13",44: "23",45: "12",46: "1",47: "2",48: "0",49: "23",
@@ -164,9 +166,11 @@ MuseScore {
 
                   return replaceValves(tuba_valveMap[pitch]) || 'p' + pitch; 
             }
+
             if(noete_names.checked){
-                  return pitchToNoteName(pct, pitch);
+                  return pitchToNoteName(note, pct, pitch);
             }
+
             if(debug.checked){
                   var o = getOctave(pitch);  
                   return pct+'\n'+pitch+'\n'+o;
@@ -185,9 +189,14 @@ MuseScore {
             }
       }
 
-      function pitchToNoteName(pct, pitch) {
+      function pitchToNoteName(note, pct, pitch) {
+            var staff = note.staff; // Get the staff of the note
+            var part = staff.part;  // Get the instrument part
+            var instrument = part.instrument; // Get instrument data
+            console.log(instrument);
+
             if(pct == -1){
-                  pct = 42; // hack for feses
+                  pct = 34; // hack for feses
             }
 
             var america =  {
@@ -204,7 +213,6 @@ MuseScore {
                   20: "Fis",   21: "Cis",    22: "Gis",    23: "Dis",   24: "Ais",   25: "Eis",   26: "His",
                   27: "Fisis", 28: "Cisis",  29: "Gisis",  30: "Disis", 31: "Aisis", 32: "Eisis", 33: "Hisis"
             };
-
 
             return ((note_names==1) ? america[pct] : austria[pct] ) + "\n" + getOctave(pitch);
       }

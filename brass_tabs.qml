@@ -14,14 +14,15 @@ MuseScore {
       thumbnailName: "brass.jpeg"
       pluginType: "dialog"
       requiresScore: true
-      implicitHeight: 350;
-      implicitWidth: 300 ; 
+      //implicitHeight: 350;
+      //implicitWidth: 350; 
 
       property bool null_as_no_valve: true       
       property bool trompetcheck_visible: true
       property int valves: 3
       property int note_names: 1
-     
+      property var options: []
+      
       GridLayout 
       {
             id: walkingBassMainLayout
@@ -103,6 +104,13 @@ MuseScore {
                         text: "Europe (H B)"
                         onClicked: note_names = 2
                   }
+            }
+
+            ComboBox {
+                  id: optionComboBox
+                  model: options
+                  currentIndex: model.indexOf(settingsDialog.selectedOption)
+                  onCurrentIndexChanged: settingsDialog.selectedOption = model[currentIndex]
             }
             
             RoundButton 
@@ -193,7 +201,7 @@ MuseScore {
             var staff = note.staff; // Get the staff of the note
             var part = staff.part;  // Get the instrument part
             var instrument = part.instrument; // Get instrument data
-            console.log(instrument);
+            console.log(staff);
 
             if(pct == -1){
                   pct = 34; // hack for feses
@@ -249,6 +257,54 @@ MuseScore {
                   }
             }
             curScore.endCmd();
-	      quit();
+      }
+
+      function var_dump(obj) {
+            for (var key in obj) {
+                  if (obj.hasOwnProperty(key)) {
+                        console.log(key + ": " + obj[key]);
+                  }
+            }
+      }
+
+//needs to be tested
+      function createExcerptOnA5() {
+            var cursor = curScore.newCursor();
+            cursor.goToStart(); // Gehe zum Anfang des Scores
+
+            // Stellen Sie das Seitenformat auf A5 um
+            curScore.layout.pageWidth = 148;  // A5 Breite in mm
+            curScore.layout.pageHeight = 210; // A5 Höhe in mm
+
+            // Nehmen wir an, dass du den ersten Part (z.B. die Trompete) als Auszug erstellen möchtest
+            var part = curScore.parts[0];  // Hole den ersten Part (z.B. Trompete)
+
+            // Erstelle den Auszug des Parts
+            var excerpt = curScore.createExcerpt(part);
+
+            // Ausgabe für Bestätigung
+            console.log("Auszug für das Instrument " + part.instrument.longName + " wurde erstellt.");
+      }
+
+      onRun:
+      {
+            curScore.startCmd();
+            if (curScore) 
+            {
+                  console.log("option iteration started");
+                  for (var i = 0; i < curScore.parts.length; i++) 
+                  {
+                        var part = curScore.parts[i];
+                      
+                        options.push(part.longName);
+                        console.log("Instrument " + (i + 1) + ": " + part.longName);
+                        console.log(options);
+                  }
+            }
+            else
+            {
+                  console.log("Kein Score geladen.");
+            }
+            curScore.endCmd();
       }
 }

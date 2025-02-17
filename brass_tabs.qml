@@ -14,18 +14,28 @@ MuseScore {
       thumbnailName: "brass.jpeg"
       pluginType: "dialog"
       requiresScore: true
-      //implicitHeight: 350;
-      //implicitWidth: 350; 
+
 
       property bool null_as_no_valve: true       
       property bool trompetcheck_visible: true
       property int valves: 3
       property int note_names: 1
-      property var options: []
+      property bool comboInit : true;
       
+      onRun:
+      {
+            curScore.startCmd();
+           
+            // if (curScore) 
+            // {
+            //       optionComboBox.model = getInstumentNames(curScore);
+            // }
+            
+      }
+
       GridLayout 
       {
-            id: walkingBassMainLayout
+            id: view
             columns: 2
             rowSpacing: 0
             anchors.fill: parent
@@ -39,6 +49,17 @@ MuseScore {
                   text: "Only selected Notes will be affected.\nSelect Notes first than run the script."
                   bottomPadding: 10
             }
+            
+
+            // ComboBox {
+            //       id: optionComboBox
+            //       model: []
+            //       onActivated: (index) => {
+            //             console.log("Ausgewähltes Instrument: " + optionComboBox.model[index]);
+            //             var part = getInstumentByName(optionComboBox.model[index]);
+            //             writeValesWholePart(part);
+            //       }
+            // }
 
             ColumnLayout {
                   Layout.columnSpan: 2
@@ -104,13 +125,6 @@ MuseScore {
                         text: "Europe (H B)"
                         onClicked: note_names = 2
                   }
-            }
-
-            ComboBox {
-                  id: optionComboBox
-                  model: options
-                  currentIndex: model.indexOf(settingsDialog.selectedOption)
-                  onCurrentIndexChanged: settingsDialog.selectedOption = model[currentIndex]
             }
             
             RoundButton 
@@ -198,11 +212,6 @@ MuseScore {
       }
 
       function pitchToNoteName(note, pct, pitch) {
-            var staff = note.staff; // Get the staff of the note
-            var part = staff.part;  // Get the instrument part
-            var instrument = part.instrument; // Get instrument data
-            console.log(staff);
-
             if(pct == -1){
                   pct = 34; // hack for feses
             }
@@ -266,45 +275,26 @@ MuseScore {
                   }
             }
       }
-
-//needs to be tested
-      function createExcerptOnA5() {
-            var cursor = curScore.newCursor();
-            cursor.goToStart(); // Gehe zum Anfang des Scores
-
-            // Stellen Sie das Seitenformat auf A5 um
-            curScore.layout.pageWidth = 148;  // A5 Breite in mm
-            curScore.layout.pageHeight = 210; // A5 Höhe in mm
-
-            // Nehmen wir an, dass du den ersten Part (z.B. die Trompete) als Auszug erstellen möchtest
-            var part = curScore.parts[0];  // Hole den ersten Part (z.B. Trompete)
-
-            // Erstelle den Auszug des Parts
-            var excerpt = curScore.createExcerpt(part);
-
-            // Ausgabe für Bestätigung
-            console.log("Auszug für das Instrument " + part.instrument.longName + " wurde erstellt.");
-      }
-
-      onRun:
+      function getInstumentByName(name)
       {
-            curScore.startCmd();
-            if (curScore) 
+            var instrumentList = [];
+            for (var i = 0; i < curScore.parts.length; i++) 
             {
-                  console.log("option iteration started");
-                  for (var i = 0; i < curScore.parts.length; i++) 
-                  {
-                        var part = curScore.parts[i];
-                      
-                        options.push(part.longName);
-                        console.log("Instrument " + (i + 1) + ": " + part.longName);
-                        console.log(options);
+                  var part = curScore.parts[i];
+                  if(part.longName === name){
+                        return part;
                   }
             }
-            else
+            return false;
+      }
+      function getInstumentNames(curScore)
+      {
+            var instrumentList = [];
+            for (var i = 0; i < curScore.parts.length; i++) 
             {
-                  console.log("Kein Score geladen.");
+                  var part = curScore.parts[i];
+                  instrumentList.push(part.longName);
             }
-            curScore.endCmd();
+            return instrumentList;
       }
 }
